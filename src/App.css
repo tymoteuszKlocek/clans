@@ -275,7 +275,7 @@ button.btn-secondary:hover {
 
 /* ===== User List Item Styles ===== */
 .user-list-item {
-  padding: 10px 14px;
+  padding: 8px 12px;
   border-radius: 6px;
   cursor: pointer;
   transition: all 0.15s ease;
@@ -283,23 +283,36 @@ button.btn-secondary:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+  background: #fafafa;
 }
 
 .user-list-item:hover {
-  background: rgba(233, 69, 96, 0.08);
+  background: rgba(233, 69, 96, 0.06);
 }
 
 .user-list-item.selected {
-  background: rgba(233, 69, 96, 0.12);
+  background: rgba(233, 69, 96, 0.1);
   border-color: #e94560;
 }
 
 .user-list-item .user-name {
+  font-size: 13px;
   font-weight: 500;
-  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .user-list-item.selected .user-name {
   color: #e94560;
   font-weight: 600;
+}
+
+.user-list-item .btn-secondary,
+.user-list-item .btn-danger {
+  padding: 4px 10px;
+  font-size: 12px;
+  min-width: unset;
 }

@@ -393,7 +393,7 @@ const GraphView = () => {
         });
 
         // Draw nodes as rings (unfilled circles with colored border)
-        sigma.setSetting("nodeReducer", (node, data) => {
+        sigma.setSetting("nodeReducer", (_node, data) => {
             return {
                 ...data,
                 borderColor: data.color,
@@ -407,7 +407,7 @@ const GraphView = () => {
         // sigma.setSetting("defaultNodeBorderColor", GREY);
 
         // Hover: show label for non-parent nodes + tooltip
-        sigma.setSetting("nodeReducer", (node, data) => {
+        sigma.setSetting("nodeReducer", (_node, data) => {
             const res = { ...data };
             // const hovered = sigma.getCustomBBox()
             //     ? false

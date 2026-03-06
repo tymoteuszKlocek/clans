@@ -12,7 +12,6 @@ interface PendingEdge {
 }
 
 interface UserFormProps {
-  onLogout: () => void;
   editingUser: UserNode | null;
   onCancelEdit: () => void;
 }
@@ -31,12 +30,12 @@ const EMPTY_FORM = {
   spouseId: "",
 };
 
-const UserForm = ({ onLogout, editingUser, onCancelEdit }: UserFormProps) => {
+const UserForm = ({editingUser, onCancelEdit }: UserFormProps) => {
   const { users, edges } = useGraphData();
   const [form, setForm] = useState(EMPTY_FORM);
   const [pendingEdges, setPendingEdges] = useState<PendingEdge[]>([]);
-  const [edgeTarget, setEdgeTarget] = useState("");
-  const [edgeType, setEdgeType] = useState<"family" | "community">("family");
+  // const [edgeTarget, setEdgeTarget] = useState("");
+  // const [edgeType, setEdgeType] = useState<"family" | "community">("family");
   const [saving, setSaving] = useState(false);
   const [success, setSuccess] = useState("");
 
@@ -82,13 +81,13 @@ const UserForm = ({ onLogout, editingUser, onCancelEdit }: UserFormProps) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const addEdge = () => {
-    if (!edgeTarget) return;
-    if (editingUser && edgeTarget === editingUser.id) return;
-    if (pendingEdges.some((e) => e.targetId === edgeTarget)) return;
-    setPendingEdges([...pendingEdges, { targetId: edgeTarget, type: edgeType }]);
-    setEdgeTarget("");
-  };
+  // const addEdge = () => {
+  //   if (!edgeTarget) return;
+  //   if (editingUser && edgeTarget === editingUser.id) return;
+  //   if (pendingEdges.some((e) => e.targetId === edgeTarget)) return;
+  //   setPendingEdges([...pendingEdges, { targetId: edgeTarget, type: edgeType }]);
+  //   setEdgeTarget("");
+  // };
 
   const removeEdge = (targetId: string) => {
     setPendingEdges(pendingEdges.filter((e) => e.targetId !== targetId));
@@ -193,10 +192,6 @@ const UserForm = ({ onLogout, editingUser, onCancelEdit }: UserFormProps) => {
 
   return (
     <div className="admin-panel">
-      <div className="admin-header">
-        <h2>{editingUser ? "✏️ Edit User" : "➕ Add New User"}</h2>
-        <button className="btn btn-secondary" onClick={onLogout}>Logout</button>
-      </div>
 
       {success && (
         <div style={{ background: "#d4edda", color: "#155724", padding: "10px 14px", borderRadius: "6px", marginBottom: "16px" }}>
@@ -204,19 +199,7 @@ const UserForm = ({ onLogout, editingUser, onCancelEdit }: UserFormProps) => {
         </div>
       )}
 
-      {editingUser && (
-        <div style={{ marginBottom: "16px" }}>
-          <button
-            type="button"
-            className="btn btn-secondary"
-            onClick={onCancelEdit}
-            style={{ marginLeft: 0 }}
-          >
-            ← Back to Add New User
-          </button>
-        </div>
-      )}
-
+      
       <form onSubmit={handleSubmit}>
         <div className="form-row">
           <div className="form-group">

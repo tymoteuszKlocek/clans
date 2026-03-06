@@ -1,31 +1,59 @@
 import { useState } from "react";
+import type { UserNode } from "../types";
 import AdminLogin from "./AdminLogin";
 import UserForm from "./UserForm";
 import UserList from "./UserList";
-import type { UserNode } from "../types";
 
 const AdminPanel = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
   const [editingUser, setEditingUser] = useState<UserNode | null>(null);
+  const [showForm, setShowForm] = useState(false);
 
-  if (!isLoggedIn) {
-    return <AdminLogin onLogin={() => setIsLoggedIn(true)} />;
+  if (!loggedIn) return <AdminLogin onLogin={() => setLoggedIn(true)} />;
+
+  const handleEdit = (user: UserNode) => {
+    setEditingUser(user);
+    setShowForm(true);
+  };
+
+  const handleDone = () => {
+    setEditingUser(null);
+    setShowForm(false);
+  };
+
+  const hndleLogout = () => {
+    setLoggedIn(false);
+    setEditingUser(null);
+    setShowForm(false);
   }
 
   return (
-    <div>
-      <UserForm
-        onLogout={() => setIsLoggedIn(false)}
-        editingUser={editingUser}
-        onCancelEdit={() => setEditingUser(null)}
-      />
-      <div style={{ maxWidth: "700px", margin: "0 auto", padding: "0 40px 40px" }}>
-        <h3 style={{ marginBottom: "12px" }}>👥 Existing Users ({editingUser ? "select to edit" : "click Edit"})</h3>
-        <UserList onEdit={(user) => {
-          setEditingUser(user);
-          window.scrollTo({ top: 0, behavior: "smooth" });
-        }} />
-      </div>
+    <div style={{ padding: "16px", maxWidth: "600px", margin: "0 auto" }}>
+      <button className="btn btn-secondary" onClick={hndleLogout}>Logout</button>
+      {!showForm ? (
+        <>
+          <button
+            className="btn-primary"
+            onClick={() => { setEditingUser(null); setShowForm(true); }}
+            style={{ width: "100%", marginBottom: "16px", padding: "12px", fontSize: "15px" }}
+          >
+            ＋ Add New User
+          </button>
+          <UserList onEdit={handleEdit} />
+        </>
+      ) : (
+        <>
+          <button
+            className="btn-secondary"
+            onClick={handleDone}
+            style={{ marginBottom: "12px" }}
+          >
+            ← Back to List
+          </button>
+          
+          <UserForm editingUser={editingUser}  onCancelEdit={handleDone} />
+        </>
+      )}
     </div>
   );
 };
