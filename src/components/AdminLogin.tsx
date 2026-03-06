@@ -1,13 +1,13 @@
 import { useState } from "react";
 
-const ADMIN_PASSWORD = "admin123";
+const ADMIN_PASSWORD = "babjaga"; // temp
 
 interface AdminLoginProps {
   onLogin: () => void;
 }
 
 const AdminLogin = ({ onLogin }: AdminLoginProps) => {
-  const [password, setPassword] = useState("admin123");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
