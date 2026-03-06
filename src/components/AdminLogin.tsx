@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const ADMIN_PASSWORD = "babjaga"; // temp
+const ADMIN_PASSWORD = "babajaga"; // temp
 
 interface AdminLoginProps {
   onLogin: () => void;
